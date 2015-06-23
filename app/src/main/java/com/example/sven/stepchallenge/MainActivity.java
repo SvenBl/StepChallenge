@@ -123,7 +123,7 @@ public class MainActivity extends ActionBarActivity {
         notification.setDefaults(Notification.DEFAULT_VIBRATE);
         notification.setWhen(System.currentTimeMillis());
         notification.setContentTitle("Congrats! Daily goal reached!");
-        notification.setContentText("You succesfully achieved your goal of " + goalPref + " steps!");
+        notification.setContentText("You successfully achieved your goal of " + goalPref + " steps!");
 
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
