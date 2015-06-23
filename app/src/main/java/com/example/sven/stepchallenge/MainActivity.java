@@ -36,13 +36,6 @@ public class MainActivity extends ActionBarActivity {
 
     //Sensorvariables
     private SensorManager sensorManager;
-    private float acceleration;
-    private float previousX;
-    private float currentX;
-    private float previousY;
-    private float currentY;
-    private float previousZ;
-    private float currentZ;
     private float currentvectorSum;
     private int numSteps;
     boolean inStep;
@@ -58,7 +51,20 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         tryGetPref();
+        getUI();
 
+        //Setup sensor variables
+        numSteps = 0;
+        currentvectorSum = 0;
+
+        //notification setup
+        notification = new NotificationCompat.Builder(this);
+        notification.setAutoCancel(true);
+
+        enableAccelerometerListening();
+    }
+
+    public void getUI(){
         stepsTodayValue = (TextView) findViewById(R.id.stepsTodayValue);
         dailyGoalValue = (TextView) findViewById(R.id.dailyGoalValue);
         resetButton = (Button) findViewById(R.id.resetButton);
@@ -67,21 +73,6 @@ public class MainActivity extends ActionBarActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setMax(goalPref);
         progressBar.setProgress(numSteps);
-
-        previousX = 0;
-        currentX = 0;
-        previousY = 0;
-        currentY = 0;
-        previousZ = 0;
-        currentZ = 0;
-        numSteps = 0;
-        currentvectorSum = 0;
-
-        acceleration = 0.00f;
-
-        notification = new NotificationCompat.Builder(this);
-        notification.setAutoCancel(true);
-        enableAccelerometerListening();
     }
 
     private void enableAccelerometerListening(){
@@ -96,22 +87,15 @@ public class MainActivity extends ActionBarActivity {
             float x = event.values[0];
             float y = event.values[1];
             float z = event.values[2];
-            currentX = x;
-            currentY = y;
-            currentZ = z;
 
             currentvectorSum = (x*x + y*y + z*z);
-            distanceRunValue.setText(String.valueOf(currentvectorSum));
             if(currentvectorSum < 100 && inStep==false){
                 inStep = true;
             }
             if(currentvectorSum > 125 && inStep==true){
                 inStep = false;
                 numSteps++;
-                progressBar.setProgress(numSteps);
-                dailyGoalValue.setText(numSteps + " of " + String.valueOf(goalPref));
-                stepsTodayValue.setText(String.valueOf(numSteps));
-                distanceRunValue.setText(String.valueOf(Math.round(lengthPref * numSteps*100)/100.0) + " m");
+                stepNumberChanged();
                 if(numSteps == goalPref){
                     goalReachedNotify();
                 }
@@ -124,6 +108,13 @@ public class MainActivity extends ActionBarActivity {
 
         }
     };
+
+    public void stepNumberChanged(){
+        progressBar.setProgress(numSteps);
+        dailyGoalValue.setText(numSteps + " of " + String.valueOf(goalPref));
+        stepsTodayValue.setText(String.valueOf(numSteps));
+        distanceRunValue.setText(String.valueOf(Math.round(lengthPref * numSteps*100)/100.0) + " m");
+    }
 
     public void goalReachedNotify(){
         //Build the notification
@@ -154,10 +145,8 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         tryGetPref();
-        dailyGoalValue.setText(numSteps + " of " + goalPref);
+        stepNumberChanged();
         progressBar.setMax(goalPref);
-        progressBar.setProgress(numSteps);
-        distanceRunValue.setText(String.valueOf(Math.round(lengthPref * numSteps*100)/100) + " m");
         super.onResume();
     }
 
