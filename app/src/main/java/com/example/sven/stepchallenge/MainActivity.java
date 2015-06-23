@@ -37,8 +37,13 @@ public class MainActivity extends ActionBarActivity {
     //Sensorvariables
     private SensorManager sensorManager;
     private float acceleration;
+    private float previousX;
+    private float currentX;
     private float previousY;
     private float currentY;
+    private float previousZ;
+    private float currentZ;
+    private float currentvectorSum;
     private int numSteps;
     boolean inStep;
 
@@ -63,9 +68,14 @@ public class MainActivity extends ActionBarActivity {
         progressBar.setMax(goalPref);
         progressBar.setProgress(numSteps);
 
+        previousX = 0;
+        currentX = 0;
         previousY = 0;
         currentY = 0;
+        previousZ = 0;
+        currentZ = 0;
         numSteps = 0;
+        currentvectorSum = 0;
 
         acceleration = 0.00f;
 
@@ -83,12 +93,19 @@ public class MainActivity extends ActionBarActivity {
     private SensorEventListener sensorEventListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
             float y = event.values[1];
+            float z = event.values[2];
+            currentX = x;
             currentY = y;
-            if(currentY < 10 && inStep==false){
+            currentZ = z;
+
+            currentvectorSum = (x*x + y*y + z*z);
+            distanceRunValue.setText(String.valueOf(currentvectorSum));
+            if(currentvectorSum < 100 && inStep==false){
                 inStep = true;
             }
-            if(currentY > 11 && inStep==true){
+            if(currentvectorSum > 125 && inStep==true){
                 inStep = false;
                 numSteps++;
                 progressBar.setProgress(numSteps);
@@ -100,8 +117,6 @@ public class MainActivity extends ActionBarActivity {
                 }
 
             }
-
-            previousY = y;
         }
 
         @Override
@@ -134,9 +149,12 @@ public class MainActivity extends ActionBarActivity {
             lengthPref = Float.parseFloat(sharedPref.getString("length", ""));
         }catch(Exception e){}
     }
+
+
     @Override
     protected void onResume() {
         tryGetPref();
+        dailyGoalValue.setText(numSteps + " of " + goalPref);
         progressBar.setMax(goalPref);
         progressBar.setProgress(numSteps);
         distanceRunValue.setText(String.valueOf(Math.round(lengthPref * numSteps*100)/100) + " m");
