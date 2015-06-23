@@ -12,4 +12,5 @@
     <string name="distance_run_text">Distance run:</string>
     <string name="reset_counter_button">Reset</string>
     <string name="title_activity_help">Help</string>
+    <string name="help_info">Step Challenge is an app to count your steps. Therefore it works like a pedometer. Type in your goal and your step length in the settings option and return to the main menu. You can now walk and see your steps being counted. When you reach your goal you will get an notification to have some proof of your achievement.</string>
 </resources>
