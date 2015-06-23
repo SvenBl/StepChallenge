@@ -172,11 +172,12 @@ public class MainActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Intent i = new Intent(this, Settings.class);
-                startActivity(i);
+                Intent settings = new Intent(this, Settings.class);
+                startActivity(settings);
                 return true;
             case R.id.menu_help:
-
+                Intent help = new Intent(this, Help.class);
+                startActivity(help);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
