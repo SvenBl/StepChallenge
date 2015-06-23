@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Step Challenge</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="daily_goal_question">What is your daily goal?</string>
+    <string name="step_length_question">What is your average step length?</string>
+    <string name="set_preferences_button">Set Preferences</string>
+    <string name="steps_done_text">Steps Today:</string>
+    <string name="daily_goal_text">Daily Goal:</string>
+    <string name="distance_run_text">Distance run:</string>
+    <string name="reset_counter_button">Reset</string>
+</resources>
