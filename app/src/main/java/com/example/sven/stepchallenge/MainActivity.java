@@ -118,7 +118,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void goalReachedNotify(){
         //Build the notification
-        notification.setSmallIcon(R.mipmap.ic_launcher);
+        notification.setSmallIcon(R.mipmap.ic_notify);
         notification.setTicker("This is the ticker");
         notification.setDefaults(Notification.DEFAULT_VIBRATE);
         notification.setWhen(System.currentTimeMillis());
