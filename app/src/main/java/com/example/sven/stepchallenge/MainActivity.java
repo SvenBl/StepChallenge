@@ -126,6 +126,9 @@ public class MainActivity extends ActionBarActivity {
         notification.setContentText("You successfully achieved your goal of " + goalPref + " steps!");
 
         Intent intent = new Intent(this, MainActivity.class);
+        intent.setAction("android.intent.action.MAIN");
+        intent.addCategory("android.intent.category.LAUNCHER");
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         notification.setContentIntent(pendingIntent);
 

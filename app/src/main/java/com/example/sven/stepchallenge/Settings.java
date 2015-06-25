@@ -66,6 +66,7 @@ public class Settings extends ActionBarActivity {
             case R.id.menu_help:
                 Intent help = new Intent(this, Help.class);
                 startActivity(help);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

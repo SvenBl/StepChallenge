@@ -29,6 +29,7 @@ public class Help extends ActionBarActivity {
             case R.id.action_settings:
                 Intent settings = new Intent(this, Settings.class);
                 startActivity(settings);
+                finish();
                 return true;
             case R.id.menu_help:
                 return true;
